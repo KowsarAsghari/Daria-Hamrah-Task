@@ -38,7 +38,7 @@ class SalesDataProcessor:
     def calculate_monthly_avg_discount(self):
         """Calculates the average discount percentage for each month."""
         self.data['discount_percentage'] = (
-            (self.data['actual_price'] - self.data['discount_price']) / self.data['actual_price']
+            1 - self.data['discount_price'] / self.data['actual_price']
         ) * 100
         monthly_avg_discount = self.data.groupby('month').agg(
             avg_discount_percentage=('discount_percentage', 'mean')
@@ -64,3 +64,10 @@ if __name__ == "__main__":
 
     processor = SalesDataProcessor(file_path, output_path)
     monthly_sales, monthly_avg_discount = processor.process()
+
+    # Print results
+    print("\nMonthly Sales:")
+    print(monthly_sales)
+
+    print("\nMonthly Average Discount:")
+    print(monthly_avg_discount)
